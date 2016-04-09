@@ -96,7 +96,7 @@ TodoApp.Views.DeleteTodoView = Marionette.ItemView.extend({
         this.close();
     },
     className: "modal",
-    delete: function(e) {
+    'delete': function(e) {
         window.log("Deleting todo entry: ", this.model.toJSON());
 
         var self = this;
