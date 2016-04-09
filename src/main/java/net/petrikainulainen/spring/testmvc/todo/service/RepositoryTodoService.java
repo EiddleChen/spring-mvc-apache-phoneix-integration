@@ -32,7 +32,13 @@ public class RepositoryTodoService implements TodoService {
                 .description(added.getDescription())
                 .build();
 
-        return repository.save(model);
+        repository.saveNative(model.getCreationTime(),
+																	 model.getDescription(), 
+																	 model.getModificationTime(),
+																	 model.getTitle(), 
+																	 model.getVersion());
+	
+        return model;
     }
 
     @Transactional(rollbackFor = {TodoNotFoundException.class})
@@ -77,8 +83,12 @@ public class RepositoryTodoService implements TodoService {
         Todo model = findById(updated.getId());
         LOGGER.debug("Found a to-do entry: {}", model);
 
-        model.update(updated.getDescription(), updated.getTitle());
-
+        repository.updateNative(model.getId(),
+        													   model.getCreationTime(),
+																	   updated.getDescription(), 
+																	   model.getModificationTime(),
+																	   updated.getTitle(), 
+																	   model.getVersion());
         return model;
     }
 }
